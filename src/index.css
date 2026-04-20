@@ -1,0 +1,280 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: auto; }
+  body {
+    background: #04171C;
+    color: #eff1f3;
+    font-family: Inter, system-ui, sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+  ::selection { background: oklch(0.85 0.14 125); color: #0e1611; }
+
+  @property --ang {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+}
+
+@layer components {
+  /* Social pills */
+  .pill {
+    --pill-color: oklch(0.85 0.14 125);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px 10px 14px;
+    border-radius: 999px;
+    background: color-mix(in oklch, var(--pill-color) 10%, #1c2620);
+    border: 1px solid color-mix(in oklch, var(--pill-color) 30%, transparent);
+    color: #eff1f3;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    will-change: transform;
+  }
+  .pill:hover {
+    background: color-mix(in oklch, var(--pill-color) 20%, #1c2620);
+    border-color: color-mix(in oklch, var(--pill-color) 55%, transparent);
+    box-shadow: 0 8px 24px -12px color-mix(in oklch, var(--pill-color) 60%, transparent);
+  }
+  .pill .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--pill-color);
+    box-shadow: 0 0 8px color-mix(in oklch, var(--pill-color) 60%, transparent);
+  }
+  .pill .meta {
+    color: oklch(0.5 0.01 120);
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    margin-left: 4px;
+  }
+  .pill.c-github   { --pill-color: #9ca3af; }
+  .pill.c-linkedin { --pill-color: #0a66c2; }
+  .pill.c-readcv   { --pill-color: oklch(0.82 0.14 125); }
+  .pill.c-x        { --pill-color: #f5f5f5; }
+  .pill.c-hashnode { --pill-color: #2962ff; }
+  .pill.c-dribbble { --pill-color: #ea4c89; }
+  .pill.c-portfolio { --pill-color: #ff7a59; }
+  .pill.c-snapchat { --pill-color: #fffc00; }
+  .pill.c-whatsapp { --pill-color: #25d366; }
+  .pill.c-instagram { --pill-color: #e1306c; }
+  .pill.c-contra { --pill-color: #c1ff72; }
+  .pill.c-figma    { --pill-color: #f24e1e; }
+
+  /* Portrait */
+  .portrait-glow {
+    position: absolute;
+    inset: -2px;
+    border-radius: 999px;
+    padding: 2px;
+    background: conic-gradient(
+      #ff3b3b,
+      #ffd93b,
+      #48ff7b,
+      #31d7ff,
+      #4b5dff,
+      #d94bff,
+      #ff3b3b
+    );
+    filter: saturate(1.2);
+    opacity: 0.88;
+    animation: portraitRgbBlink 5.8s linear infinite;
+  }
+  .portrait-glow::before {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 999px;
+    background: inherit;
+    filter: blur(8px);
+    z-index: -1;
+    opacity: 0.36;
+    animation: portraitPulse 2.8s ease-in-out infinite, portraitRgbShift 5.8s linear infinite;
+  }
+  .portrait-glow::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 0 6px rgba(255, 59, 59, 0.14),
+      0 0 10px rgba(49, 215, 255, 0.1),
+      0 0 14px rgba(217, 75, 255, 0.08);
+    opacity: 0.12;
+    animation: portraitHalo 2.8s ease-in-out infinite, portraitHaloRgb 5.8s linear infinite;
+  }
+
+  /* Tagline gradient text */
+  .tagline-gradient {
+    background: linear-gradient(
+      90deg,
+      #eef7ff 0%,
+      #8af5ff 22%,
+      #79ffcf 46%,
+      #6ed7ff 68%,
+      #9aa8ff 86%,
+      #eef7ff 100%
+    );
+    background-size: 240% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    filter: drop-shadow(0 0 10px rgba(110, 215, 255, 0.16));
+    animation: taglineShift 8s ease-in-out infinite;
+  }
+
+  /* Status dot */
+  .status-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: oklch(0.85 0.14 125);
+    box-shadow: 0 0 0 3px rgba(195, 230, 120, 0.12);
+    animation: pulse 2.4s infinite ease-out;
+  }
+
+  .projects-track {
+    scrollbar-width: none;
+  }
+  .projects-track::-webkit-scrollbar { display: none; }
+
+  /* Precise dot — GSAP moves it with zero lag via quickSetter */
+  .cursor-dot {
+    position: fixed;
+    top: -3px;
+    left: -3px;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    pointer-events: none;
+    z-index: 62;
+    background: rgba(240, 238, 225, 0.95);
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+
+  /* Trailing ring — GSAP moves it with a short ease */
+  .cursor-ring {
+    position: fixed;
+    top: -14px;
+    left: -14px;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    pointer-events: none;
+    z-index: 61;
+    border: 1px solid rgba(86, 214, 230, 0.5);
+    background-color: rgba(86, 214, 230, 0.05);
+    box-shadow: 0 0 12px rgba(86, 214, 230, 0.2);
+    opacity: 0;
+    mix-blend-mode: screen;
+    will-change: transform, opacity;
+  }
+}
+
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  [role="button"] {
+    cursor: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes portraitPulse {
+  0%, 100% {
+    opacity: 0.18;
+    transform: scale(0.992);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.008);
+  }
+}
+
+@keyframes portraitRgbBlink {
+  0%, 100% {
+    opacity: 0.62;
+    filter: hue-rotate(0deg) saturate(1.08) brightness(0.98);
+  }
+  25% {
+    opacity: 0.82;
+    filter: hue-rotate(90deg) saturate(1.2) brightness(1.04);
+  }
+  50% {
+    opacity: 0.94;
+    filter: hue-rotate(180deg) saturate(1.28) brightness(1.1);
+  }
+  75% {
+    opacity: 0.82;
+    filter: hue-rotate(270deg) saturate(1.2) brightness(1.04);
+  }
+}
+
+@keyframes portraitHalo {
+  0%, 100% {
+    opacity: 0.06;
+    transform: scale(0.998);
+  }
+  50% {
+    opacity: 0.14;
+    transform: scale(1.004);
+  }
+}
+
+@keyframes portraitRgbShift {
+  0% {
+    filter: blur(8px) hue-rotate(0deg) saturate(1.15);
+  }
+  100% {
+    filter: blur(8px) hue-rotate(360deg) saturate(1.15);
+  }
+}
+
+@keyframes portraitHaloRgb {
+  0%, 100% {
+    box-shadow:
+      0 0 6px rgba(255, 59, 59, 0.14),
+      0 0 10px rgba(49, 215, 255, 0.1),
+      0 0 14px rgba(217, 75, 255, 0.08);
+  }
+  33% {
+    box-shadow:
+      0 0 6px rgba(72, 255, 123, 0.14),
+      0 0 10px rgba(75, 93, 255, 0.1),
+      0 0 14px rgba(255, 217, 59, 0.08);
+  }
+  66% {
+    box-shadow:
+      0 0 6px rgba(49, 215, 255, 0.14),
+      0 0 10px rgba(217, 75, 255, 0.1),
+      0 0 14px rgba(255, 59, 59, 0.08);
+  }
+}

@@ -33,7 +33,7 @@ export default function HeroCopy({ title, tagline }) {
       >
         <span className="text-fg font-medium text-[#eff1f3]">{title}</span>
         <span className="inline-block w-1 h-1 rounded-full bg-fg-dim -translate-y-1" />
-        <span className="font-serif italic text-[22px] leading-[1.35] m-0 mb-2 max-w-[480px] tagline-gradient">
+        <span className="font-fraunces italic text-[22px] leading-[1.35] m-0 mb-2 max-w-[480px] tagline-carved">
           {tagline}
         </span>
       </motion.div>

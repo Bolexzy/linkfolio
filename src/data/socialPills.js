@@ -160,7 +160,7 @@ export function mapCsvToSocialPills(text) {
 }
 
 export async function loadSocialPills(fetchImpl = fetch) {
-  const response = await fetchImpl(SOCIAL_PILLS_CSV_URL);
+  const response = await fetchImpl(`${SOCIAL_PILLS_CSV_URL}&t=${Date.now()}`, { cache: 'no-store' });
 
   if (!response.ok) {
     throw new Error(`Failed to fetch social pills CSV: ${response.status}`);

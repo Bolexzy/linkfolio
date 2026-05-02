@@ -3,7 +3,7 @@
 
 export const DEFAULT_REVIEWS = [
   {
-    id: 'sarah-chen',
+    id: 'ajay-singh',
     quote:
       'Boluwatife has an exceptional eye for detail. He understood the brief immediately and shipped a product that felt inevitable from the first click.',
     name: 'Sarah Chen',
@@ -12,7 +12,7 @@ export const DEFAULT_REVIEWS = [
     avatarColor: '#56D6E6',
   },
   {
-    id: 'james-okonkwo',
+    id: 'charles-okon',
     quote:
       'Great communicator, fast turnaround. The component system he built became the reference point the entire team rallied around.',
     name: 'James Okonkwo',
@@ -21,7 +21,7 @@ export const DEFAULT_REVIEWS = [
     avatarColor: '#005b94',
   },
   {
-    id: 'amara-diallo',
+    id: 'david-butler',
     quote:
       'Calm, precise, and technically excellent. Exactly the kind of embedded engineer you want when the interface is the product.',
     name: 'Amara Diallo',
@@ -192,7 +192,7 @@ export function mapCsvToReviews(text) {
 }
 
 export async function loadReviews(fetchImpl = fetch) {
-  const response = await fetchImpl(CLIENTS_CSV_URL);
+  const response = await fetchImpl(`${CLIENTS_CSV_URL}&t=${Date.now()}`, { cache: 'no-store' });
 
   if (!response.ok) {
     throw new Error(`Failed to fetch clients CSV: ${response.status}`);

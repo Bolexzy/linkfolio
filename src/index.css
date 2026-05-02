@@ -114,24 +114,34 @@
     animation: portraitHalo 2.8s ease-in-out infinite, portraitHaloRgb 5.8s linear infinite;
   }
 
-  /* Tagline gradient text */
-  .tagline-gradient {
-    background: linear-gradient(
-      90deg,
-      #eef7ff 0%,
-      #8af5ff 22%,
-      #79ffcf 46%,
-      #6ed7ff 68%,
-      #9aa8ff 86%,
-      #eef7ff 100%
-    );
-    background-size: 240% 100%;
+  /* Tagline embossed — ash gradient raised from surface */
+  .tagline-carved {
+    background: linear-gradient(90deg, #1b3040 0%, #2a4f65 55%, #3d6878 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    color: transparent;
-    filter: drop-shadow(0 0 10px rgba(110, 215, 255, 0.16));
-    animation: taglineShift 8s ease-in-out infinite;
+    text-shadow:
+      0 -1px 0 rgba(255, 255, 255, 0.18),
+      0 1px 2px rgba(0, 0, 0, 0.95),
+      0 3px 8px rgba(0, 0, 0, 0.5),
+      0 7px 16px rgba(0, 0, 0, 0.22);
+  }
+
+  /* Loading skeleton shimmer */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(240, 238, 225, 0.04) 0%,
+      rgba(240, 238, 225, 0.09) 50%,
+      rgba(240, 238, 225, 0.04) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.6s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
   }
 
   /* Status dot */

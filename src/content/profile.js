@@ -163,12 +163,8 @@ export function mapCsvToProfile(text) {
 }
 
 export async function loadProfile(fetchImpl = fetch) {
-  if (fetchImpl === fetch && profilePromise) {
-    return profilePromise;
-  }
-
   const request = (async () => {
-    const response = await fetchImpl(PROFILE_CSV_URL);
+    const response = await fetchImpl(`${PROFILE_CSV_URL}&t=${Date.now()}`, { cache: 'no-store' });
 
     if (!response.ok) {
       throw new Error(`Failed to fetch profile CSV: ${response.status}`);
@@ -177,10 +173,6 @@ export async function loadProfile(fetchImpl = fetch) {
     const text = await response.text();
     return mapCsvToProfile(text);
   })();
-
-  if (fetchImpl === fetch) {
-    profilePromise = request;
-  }
 
   return request;
 }

@@ -145,7 +145,7 @@ export function mapCsvToProjects(text) {
 }
 
 export async function loadProjects(fetchImpl = fetch) {
-  const response = await fetchImpl(PROJECTS_CSV_URL);
+  const response = await fetchImpl(`${PROJECTS_CSV_URL}&t=${Date.now()}`, { cache: 'no-store' });
 
   if (!response.ok) {
     throw new Error(`Failed to fetch projects CSV: ${response.status}`);

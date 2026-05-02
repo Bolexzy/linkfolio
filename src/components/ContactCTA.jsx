@@ -1,7 +1,30 @@
 import { useState } from 'react';
 
+// Paste your deployed Apps Script URL here after setup
+const SUBSCRIBE_URL = 'https://script.google.com/macros/s/AKfycbwhtJcLB4zOCHV5iflEcwQPiiUvc3ZKUEn0xPYFZXTUQPTo0BVRO9MbKMnbxXtwPrwc/exec';
+
 export default function ContactCTA() {
+  const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  async function handleSubscribe(e) {
+    e.preventDefault();
+    if (!SUBSCRIBE_URL) return;
+    setLoading(true);
+    setError(false);
+    try {
+      const body = new FormData();
+      body.append('email', email);
+      await fetch(SUBSCRIBE_URL, { method: 'POST', body, mode: 'no-cors' });
+      setSubscribed(true);
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <section id="contact" className="pt-24 pb-10">
@@ -22,21 +45,25 @@ export default function ContactCTA() {
           <CTARow label="Email" main="hello@boluwatife.dev" href="mailto:boluwatifemanuel@gmail.com" btnLabel="Copy ↗" btnOutline />
 
           <form
-            onSubmit={(e) => { e.preventDefault(); setSubscribed(true); }}
+            onSubmit={handleSubscribe}
             className="flex items-center gap-3 py-3.5 px-4 rounded-xl bg-[#001F33] border border-[rgba(240,238,225,0.08)] hover:border-[rgba(240,238,225,0.16)] transition-colors"
           >
             <span className="font-mono text-[10px] tracking-[0.14em] uppercase text-fg-dim min-w-[88px]">Subscribe</span>
             <input
               type="email"
               required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="you@domain.com"
-              className="flex-1 bg-transparent border-none text-fg text-sm outline-none min-w-0 placeholder:text-fg-dim"
+              disabled={subscribed || loading}
+              className="flex-1 bg-transparent border-none text-fg text-sm outline-none min-w-0 placeholder:text-fg-dim disabled:opacity-50"
             />
             <button
               type="submit"
-              className="py-2 px-3.5 rounded-full bg-fg text-[#001F33] text-xs font-medium border-none cursor-pointer hover:-translate-y-0.5 transition-transform"
+              disabled={subscribed || loading}
+              className="py-2 px-3.5 rounded-full bg-fg text-[#001F33] text-xs font-medium border-none cursor-pointer hover:-translate-y-0.5 transition-transform disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {subscribed ? 'Subscribed ✓' : 'Join list'}
+              {subscribed ? 'Subscribed ✓' : loading ? '...' : error ? 'Retry' : 'Join list'}
             </button>
           </form>
         </div>

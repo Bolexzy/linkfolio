@@ -180,7 +180,7 @@ export function mapCsvToCatalogue(text) {
 }
 
 export async function loadCatalogue(fetchImpl = fetch) {
-  const response = await fetchImpl(CATALOGUE_CSV_URL);
+  const response = await fetchImpl(`${CATALOGUE_CSV_URL}&t=${Date.now()}`, { cache: 'no-store' });
 
   if (!response.ok) {
     throw new Error(`Failed to fetch catalogue CSV: ${response.status}`);

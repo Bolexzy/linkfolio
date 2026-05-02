@@ -16,6 +16,8 @@ export default {
       fontFamily: {
         cormorant: ['"Cormorant Garamond"', 'Georgia', 'serif'],
         serif: ['"Instrument Serif"', 'Times New Roman', 'serif'],
+        fraunces: ['"Fraunces"', 'Georgia', 'serif'],
+        syne: ['"Syne"', 'system-ui', 'sans-serif'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },

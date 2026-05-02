@@ -6,7 +6,7 @@ import { DEFAULT_REVIEWS, loadReviews } from '../content/clients.js';
 const ease = [0.16, 1, 0.3, 1];
 
 export default function Reviews() {
-  const [reviews, setReviews] = useState(DEFAULT_REVIEWS);
+  const [reviews, setReviews] = useState(null);
 
   useEffect(() => {
     let ignore = false;
@@ -14,20 +14,15 @@ export default function Reviews() {
     async function fetchReviews() {
       try {
         const nextReviews = await loadReviews();
-
-        if (!ignore) {
-          setReviews(nextReviews);
-        }
+        if (!ignore) setReviews(nextReviews.length ? nextReviews : DEFAULT_REVIEWS);
       } catch (error) {
         console.error(error);
+        if (!ignore) setReviews(DEFAULT_REVIEWS);
       }
     }
 
     fetchReviews();
-
-    return () => {
-      ignore = true;
-    };
+    return () => { ignore = true; };
   }, []);
 
   return (
@@ -48,7 +43,7 @@ export default function Reviews() {
       </motion.div>
 
       <div className="grid grid-cols-3 gap-5 max-[900px]:grid-cols-1">
-        {reviews.map((review, index) => (
+        {(reviews ?? []).map((review, index) => (
           <motion.div
             key={review.id}
             initial={{ opacity: 0, y: 36 }}

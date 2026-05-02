@@ -115,7 +115,7 @@ export default function FeaturedWork() {
       <div className="relative overflow-hidden">
         <div
           ref={trackRef}
-          className="projects-track flex gap-5 overflow-x-auto overflow-y-hidden pb-2 scroll-smooth [touch-action:pan-x]"
+          className="projects-track flex gap-5 overflow-x-auto overflow-y-hidden pb-2 scroll-smooth"
           style={{ scrollSnapType: 'x mandatory' }}
         >
           {projects.length > 0 ? (
